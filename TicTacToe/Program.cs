@@ -15,8 +15,7 @@ class Program
         int input = 0;
         bool inputCorrect = true;
 
-        SetField();
-
+        //run code for duration of game
         do
         {
             if (player == 2)
@@ -31,15 +30,74 @@ class Program
                 EnterXorO(player, input);
             }
 
-            do
+            SetField();
+
+            #region
+            //check for winner
+            char[] playerChars = { 'X', 'O' };
+
+            foreach (char playerChar in playerChars)
             {
-                Console.Write($"\nPlayer {player}: Type the number where you want to play: ");
-                input = Convert.ToInt32(Console.ReadLine());
+                if (((playfield[0, 0] == playerChar) && (playfield[0, 1] == playerChar) && (playfield[0, 2] == playerChar))
+                    || ((playfield[1, 0] == playerChar) && (playfield[1, 1] == playerChar) && (playfield[1, 2] == playerChar))
+                    || ((playfield[2, 0] == playerChar) && (playfield[2, 1] == playerChar) && (playfield[2, 2] == playerChar))
+                    || ((playfield[0, 0] == playerChar) && (playfield[1, 0] == playerChar) && (playfield[2, 0] == playerChar))
+                    || ((playfield[0, 1] == playerChar) && (playfield[1, 1] == playerChar) && (playfield[2, 1] == playerChar))
+                    || ((playfield[0, 2] == playerChar) && (playfield[1, 2] == playerChar) && (playfield[2, 2] == playerChar))
+                    || ((playfield[0, 0] == playerChar) && (playfield[1, 1] == playerChar) && (playfield[2, 2] == playerChar))
+                    || ((playfield[2, 0] == playerChar) && (playfield[1, 1] == playerChar) && (playfield[0, 2] == playerChar)))
+                {
+                    if (playerChar == 'X')
+                        Console.WriteLine("\nPlayer 2 wins!");
+                    else
+                        Console.WriteLine("\nPlayer 1 wins!");
+                    break;
+                }
+            }
 
-            } while (!inputCorrect);
+                #endregion
 
+                #region
+                //test if input field is a valid play
+                do
+                {
+                    Console.Write($"\nPlayer {player}: Type the number where you want to play: ");
+                    try
+                    {
+                        input = Convert.ToInt32(Console.ReadLine());
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Please enter a valid number!");
+                    }
+
+                    if ((input == 1) && (playfield[0, 0] == '1'))
+                        inputCorrect = true;
+                    else if ((input == 2) && (playfield[0, 1] == '2'))
+                        inputCorrect = true;
+                    else if ((input == 3) && (playfield[0, 2] == '3'))
+                        inputCorrect = true;
+                    else if ((input == 4) && (playfield[1, 0] == '4'))
+                        inputCorrect = true;
+                    else if ((input == 5) && (playfield[1, 1] == '5'))
+                        inputCorrect = true;
+                    else if ((input == 6) && (playfield[1, 2] == '6'))
+                        inputCorrect = true;
+                    else if ((input == 7) && (playfield[2, 0] == '7'))
+                        inputCorrect = true;
+                    else if ((input == 8) && (playfield[2, 1] == '8'))
+                        inputCorrect = true;
+                    else if ((input == 9) && (playfield[2, 2] == '9'))
+                        inputCorrect = true;
+                    else
+                    {
+                        Console.WriteLine("\nIncorrect input, please select anohter spot");
+                        inputCorrect = false;
+                    }
+                } while (!inputCorrect);
+                #endregion
         } while (true);
-    }
+    } 
 
     public static void SetField()
     {
