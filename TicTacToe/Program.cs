@@ -9,6 +9,8 @@ class Program
         {'7','8','9' }
     };
 
+    static int turns = 0;
+
     static void Main(string[] args)
     {
         int player = 2;
@@ -51,6 +53,20 @@ class Program
                         Console.WriteLine("\nPlayer 2 wins!");
                     else
                         Console.WriteLine("\nPlayer 1 wins!");
+
+                    Console.WriteLine("Press any key to reset game.");
+                    Console.ReadKey();
+                    ResetField();
+
+                    break;
+                }
+                else if (turns == 10)
+                {
+                    Console.WriteLine("\nDraw!");
+                    Console.WriteLine("Press any key to reset game.");
+                    Console.ReadKey();
+                    ResetField();
+
                     break;
                 }
             }
@@ -97,7 +113,21 @@ class Program
                 } while (!inputCorrect);
                 #endregion
         } while (true);
-    } 
+    }
+
+    public static void ResetField()
+    {
+        char[,] playfieldInitial =
+        {
+            {'1','2','3' },
+            {'4','5','6' },
+            {'7','8','9' }
+        };
+
+        playfield = playfieldInitial;
+        SetField();
+        turns = 0;
+    }
 
     public static void SetField()
     {
@@ -111,6 +141,7 @@ class Program
         Console.WriteLine("     |     |     ");
         Console.WriteLine("  {0}  |  {1}  |  {2}  ", playfield[2, 0], playfield[2, 1], playfield[2, 2]);
         Console.WriteLine("     |     |     ");
+        turns++;
     }
 
     public static void EnterXorO(int player, int input)
